@@ -1,4 +1,4 @@
 from elixir:latest
 WORKDIR /app
-COPY ./api ./
+COPY ./rest_api ./
 

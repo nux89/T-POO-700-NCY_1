@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  postgredb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ToDoApp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://user:password@postgredb:5432/mydatabase
+    depends_on:
+      - postgredb
+    ports:
+      - "4000:4000"
+
+volumes:
+  pgdata:

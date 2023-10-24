@@ -8,6 +8,7 @@ defmodule RestApi.Admin.User do
     field :email, :string
     field :name, :string
 
+
     timestamps(type: :utc_datetime)
   end
 

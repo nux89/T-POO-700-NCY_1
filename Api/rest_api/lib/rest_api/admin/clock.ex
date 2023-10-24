@@ -1,4 +1,5 @@
 defmodule RestApi.Admin.Clock do
+  alias Hex.API.User
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -7,7 +7,19 @@ defmodule RestApiWeb.Router do
 
   scope "/api", RestApiWeb do
     pipe_through :api
+    post "/users" , UserController, :create
+    get "/users/#{id}" , UserController, :index
+    get "/users/#{id}" , UserController, :show
+    put "/users/#{id}" , UserController, :update
+    delete "/users/#{id}" , UserController, :delete
+    get "/clocks/#{id}" , ClockController, :index
+    post "/clocks/#{id}" , ClockController, :create
+    get "workingtimes/#{userid}/#{id}" , WorkingtimeController, :index
+    post "workingtimes/#{userid}" , WorkingtimeController, :create
+    put "workingtimes/#{userid}/#{id}" , WorkingtimeController, :update
+    delete "workingtimes/#{id}" , WorkingtimeController, :delete
   end
+
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:rest_api, :dev_routes) do
@@ -24,5 +36,8 @@ defmodule RestApiWeb.Router do
       live_dashboard "/dashboard", metrics: RestApiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+
   end
+
+
 end

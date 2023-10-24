@@ -13,5 +13,11 @@ RUN mix local.hex --force && \
 
 
 WORKDIR /app
+# RUN sh entrypoint.sh
 
 RUN mix deps.get
+
+EXPOSE 4000
+
+CMD ["sh","/app/entrypoint.sh"]
+

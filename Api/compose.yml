@@ -17,7 +17,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgresql://user:password@postgredb:5432/mydatabase
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: ToDoApp
+      PGPORT: 5432
+      PGHOST: postgredb
     depends_on:
       - postgredb
     ports:

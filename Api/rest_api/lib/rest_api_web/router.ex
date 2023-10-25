@@ -7,6 +7,14 @@ defmodule RestApiWeb.Router do
 
   scope "/api", RestApiWeb do
     pipe_through :api
+    get "/workingtimes/:userID", WorkingtimeController, :specificUser
+    get "/workingtimes/:userID/:id", WorkingtimeController, :specificUser
+    post "/workingtimes/:userID", WorkingtimeController, :specificUser
+    put "/workingtimes/:id", WorkingtimeController, :specificUser
+    delete "/workingtimes/:id", WorkingtimeController, :specificUser
+    resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
+    resources "/clock", ClockController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

@@ -3,6 +3,13 @@ defmodule RestApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :accepts, ["json"]
+    plug CORSPlug,
+    origins: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    plug CORSICA,
+    origins: "http://localhost:5173/",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
   end
 
   scope "/api", RestApiWeb do

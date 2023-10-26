@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :rest_api, RestApi.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "vroum",
+  password: "vroumvroum",
   hostname: "localhost",
-  database: "restapi",
+  database: "vroum",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

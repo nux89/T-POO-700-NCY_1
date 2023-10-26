@@ -1,8 +1,28 @@
 <script>
     import "./auth.scss";
     import NavBar from "$lib/navbar/NavBar.svelte";
+    import { POST, GET } from "$lib/utils";
     function validationFormulaire(e) {
-        console.log("VALIDATION");
+        const formData = new FormData(e.target);
+
+        const data = {};
+        for (let field of formData) {
+            const [key, value] = field;
+            data[key] = value;
+        }
+
+        const r = fetch("http://127.0.0.1:4002/api/users/", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user: data }),
+        });
+        r.then((e) => {
+            console.log("OK", e);
+        }).catch((e) => {
+            console.log("NO OK", e);
+        })
     }
 </script>
 
@@ -17,6 +37,7 @@
                 type="email"
                 class="form-control"
                 id="floatingInput"
+                name="email"
                 placeholder="name@example.com"
                 required
             />
@@ -27,6 +48,7 @@
                 type="text"
                 class="form-control"
                 id="floatingInput2"
+                name="name"
                 placeholder="YourName"
                 required
             />
@@ -38,25 +60,19 @@
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Password"
+                name="password"
                 required
             />
             <label for="floatingPassword">Password</label>
         </div>
 
-        <div class="checkbox mb-3">
-            <div class="form-check form-switch">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="1"
-                    name="remember_me"
-                    id="rememberMeSwitch"
-                />
-                <label class="form-check-label" for="rememberMeSwitch">
-                    Remember me</label
-                >
-            </div>
+        <div class="form-floating">
+            <select name="role" id="role">
+                <option value="employee">Employee</option>
+                <option value="manager">Manager</option>
+            </select>
         </div>
+
         <button class="w-100 btn btn-lg" type="submit">Sign in</button>
     </form>
 </main>

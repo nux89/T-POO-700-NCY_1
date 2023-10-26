@@ -1,5 +1,5 @@
 defmodule RestApiWeb.WorkingtimeJSON do
-  alias RestApi.Workingtimes.Workingtime
+  alias RestApi.Admin.Workingtime
 
   @doc """
   Renders a list of workingtimes.
@@ -18,8 +18,9 @@ defmodule RestApiWeb.WorkingtimeJSON do
   defp data(%Workingtime{} = workingtime) do
     %{
       id: workingtime.id,
+      end: workingtime.end,
       start: workingtime.start,
-      end: workingtime.end
+      user_id: workingtime.user_id
     }
   end
 end

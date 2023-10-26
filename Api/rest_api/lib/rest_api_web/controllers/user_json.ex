@@ -1,5 +1,5 @@
 defmodule RestApiWeb.UserJSON do
-  alias RestApi.Users.User
+  alias RestApi.Admin.User
 
   @doc """
   Renders a list of users.
@@ -18,8 +18,10 @@ defmodule RestApiWeb.UserJSON do
   defp data(%User{} = user) do
     %{
       id: user.id,
-      username: user.username,
-      email: user.email
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      password: user.password
     }
   end
 end

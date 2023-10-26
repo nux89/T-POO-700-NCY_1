@@ -7,15 +7,21 @@ defmodule RestApiWeb.Router do
 
   scope "/api", RestApiWeb do
     pipe_through :api
-    get "/workingtimes/:userID", WorkingtimeController, :specificUser
-    get "/workingtimes/:userID/:id", WorkingtimeController, :specificUser
-    post "/workingtimes/:userID", WorkingtimeController, :specificUser
-    put "/workingtimes/:id", WorkingtimeController, :specificUser
-    delete "/workingtimes/:id", WorkingtimeController, :specificUser
-    resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
-    resources "/clock", ClockController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
+    post "users", UserController, :create
+    put "users/:id", UserController, :update
+    delete "users/:id", UserController, :delete
+    get "users/:id", UserController, :show
+    get "users/:email/:username", UserController, :indexmail
+    post "clocks/:id" , ClockController, :create
+    get "clocks/:user_id", ClockController, :show
+    get "workingtimes", WorkingtimeController, :index
+    get "workingtimes/:userId/:id", WorkingtimeController, :show
+    post "workingtimes/:id", WorkingtimeController, :create
+    put "workingtimes/:id", WorkingtimeController, :update
+    delete "workingtimes/:id", WorkingtimeController, :delete
+
   end
+
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:rest_api, :dev_routes) do
@@ -32,5 +38,8 @@ defmodule RestApiWeb.Router do
       live_dashboard "/dashboard", metrics: RestApiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+
   end
+
+
 end

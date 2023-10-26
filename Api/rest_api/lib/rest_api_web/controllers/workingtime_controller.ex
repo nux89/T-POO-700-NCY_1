@@ -1,23 +1,18 @@
 defmodule RestApiWeb.WorkingtimeController do
   use RestApiWeb, :controller
 
-  alias RestApi.Workingtimes
-  alias RestApi.Workingtimes.Workingtime
+  alias RestApi.Admin
+  alias RestApi.Admin.Workingtime
 
   action_fallback RestApiWeb.FallbackController
 
   def index(conn, _params) do
-    workingtimes = Workingtimes.list_workingtimes()
-    render(conn, :index, workingtimes: workingtimes)
-  end
-
-  def specificUser(conn, _params) do
-    workingtimes = Workingtimes.get_by()
+    workingtimes = Admin.list_workingtimes()
     render(conn, :index, workingtimes: workingtimes)
   end
 
   def create(conn, %{"workingtime" => workingtime_params}) do
-    with {:ok, %Workingtime{} = workingtime} <- Workingtimes.create_workingtime(workingtime_params) do
+    with {:ok, %Workingtime{} = workingtime} <- Admin.create_workingtime(Map.put(workingtime_params, "user_id", conn.params["id"])) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/workingtimes/#{workingtime}")
@@ -25,23 +20,24 @@ defmodule RestApiWeb.WorkingtimeController do
     end
   end
 
+
   def show(conn, %{"id" => id}) do
-    workingtime = Workingtimes.get_workingtime!(id)
+    workingtime = Admin.get_workingtime!(id)
     render(conn, :show, workingtime: workingtime)
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
-    workingtime = Workingtimes.get_workingtime!(id)
+    workingtime = Admin.get_workingtime!(id)
 
-    with {:ok, %Workingtime{} = workingtime} <- Workingtimes.update_workingtime(workingtime, workingtime_params) do
+    with {:ok, %Workingtime{} = workingtime} <- Admin.update_workingtime(workingtime, workingtime_params) do
       render(conn, :show, workingtime: workingtime)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    workingtime = Workingtimes.get_workingtime!(id)
+    workingtime = Admin.get_workingtime!(id)
 
-    with {:ok, %Workingtime{}} <- Workingtimes.delete_workingtime(workingtime) do
+    with {:ok, %Workingtime{}} <- Admin.delete_workingtime(workingtime) do
       send_resp(conn, :no_content, "")
     end
   end

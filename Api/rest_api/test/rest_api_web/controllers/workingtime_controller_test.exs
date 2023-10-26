@@ -1,19 +1,21 @@
 defmodule RestApiWeb.WorkingtimeControllerTest do
   use RestApiWeb.ConnCase
 
-  import RestApi.WorkingtimesFixtures
+  import RestApi.AdminFixtures
 
-  alias RestApi.Workingtimes.Workingtime
+  alias RestApi.Admin.Workingtime
 
   @create_attrs %{
-    end: ~N[2023-10-23 13:42:00],
-    start: ~N[2023-10-23 13:42:00]
+    end: ~N[2023-10-24 13:44:00],
+    start: ~N[2023-10-24 13:44:00],
+    user_id: "7488a646-e31f-11e4-aace-600308960662"
   }
   @update_attrs %{
-    end: ~N[2023-10-24 13:42:00],
-    start: ~N[2023-10-24 13:42:00]
+    end: ~N[2023-10-25 13:44:00],
+    start: ~N[2023-10-25 13:44:00],
+    user_id: "7488a646-e31f-11e4-aace-600308960668"
   }
-  @invalid_attrs %{end: nil, start: nil}
+  @invalid_attrs %{end: nil, start: nil, user_id: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -35,8 +37,9 @@ defmodule RestApiWeb.WorkingtimeControllerTest do
 
       assert %{
                "id" => ^id,
-               "end" => "2023-10-23T13:42:00",
-               "start" => "2023-10-23T13:42:00"
+               "end" => "2023-10-24T13:44:00",
+               "start" => "2023-10-24T13:44:00",
+               "user_id" => "7488a646-e31f-11e4-aace-600308960662"
              } = json_response(conn, 200)["data"]
     end
 
@@ -57,8 +60,9 @@ defmodule RestApiWeb.WorkingtimeControllerTest do
 
       assert %{
                "id" => ^id,
-               "end" => "2023-10-24T13:42:00",
-               "start" => "2023-10-24T13:42:00"
+               "end" => "2023-10-25T13:44:00",
+               "start" => "2023-10-25T13:44:00",
+               "user_id" => "7488a646-e31f-11e4-aace-600308960668"
              } = json_response(conn, 200)["data"]
     end
 

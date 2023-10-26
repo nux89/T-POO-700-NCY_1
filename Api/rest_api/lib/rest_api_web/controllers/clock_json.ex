@@ -1,11 +1,11 @@
 defmodule RestApiWeb.ClockJSON do
-  alias RestApi.Clocks.Clock
+  alias RestApi.Admin.Clock
 
   @doc """
-  Renders a list of clock.
+  Renders a list of clocks.
   """
-  def index(%{clock: clock}) do
-    %{data: for(clock <- clock, do: data(clock))}
+  def index(%{clocks: clocks}) do
+    %{data: for(clock <- clocks, do: data(clock))}
   end
 
   @doc """
@@ -18,8 +18,15 @@ defmodule RestApiWeb.ClockJSON do
   defp data(%Clock{} = clock) do
     %{
       id: clock.id,
+      status: clock.status,
       time: clock.time,
-      status: clock.status
+      user_id: clock.user_id
     }
   end
+
+  defp data(nil) do
+    %{}
+  end
+
+
 end

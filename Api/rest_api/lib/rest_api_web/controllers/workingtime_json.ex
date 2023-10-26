@@ -19,7 +19,8 @@ defmodule RestApiWeb.WorkingtimeJSON do
     %{
       id: workingtime.id,
       end: workingtime.end,
-      start: workingtime.start
+      start: workingtime.start,
+      user_id: workingtime.user_id
     }
   end
 end

@@ -7,13 +7,15 @@ defmodule RestApiWeb.ClockControllerTest do
 
   @create_attrs %{
     status: true,
-    time: ~N[2023-10-23 14:49:00]
+    time: ~N[2023-10-24 12:09:00],
+    user_id: "7488a646-e31f-11e4-aace-600308960662"
   }
   @update_attrs %{
     status: false,
-    time: ~N[2023-10-24 14:49:00]
+    time: ~N[2023-10-25 12:09:00],
+    user_id: "7488a646-e31f-11e4-aace-600308960668"
   }
-  @invalid_attrs %{status: nil, time: nil}
+  @invalid_attrs %{status: nil, time: nil, user_id: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -36,7 +38,8 @@ defmodule RestApiWeb.ClockControllerTest do
       assert %{
                "id" => ^id,
                "status" => true,
-               "time" => "2023-10-23T14:49:00"
+               "time" => "2023-10-24T12:09:00",
+               "user_id" => "7488a646-e31f-11e4-aace-600308960662"
              } = json_response(conn, 200)["data"]
     end
 
@@ -58,7 +61,8 @@ defmodule RestApiWeb.ClockControllerTest do
       assert %{
                "id" => ^id,
                "status" => false,
-               "time" => "2023-10-24T14:49:00"
+               "time" => "2023-10-25T12:09:00",
+               "user_id" => "7488a646-e31f-11e4-aace-600308960668"
              } = json_response(conn, 200)["data"]
     end
 

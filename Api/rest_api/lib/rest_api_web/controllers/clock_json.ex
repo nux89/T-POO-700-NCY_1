@@ -19,7 +19,14 @@ defmodule RestApiWeb.ClockJSON do
     %{
       id: clock.id,
       status: clock.status,
-      time: clock.time
+      time: clock.time,
+      user_id: clock.user_id
     }
   end
+
+  defp data(nil) do
+    %{}
+  end
+
+
 end

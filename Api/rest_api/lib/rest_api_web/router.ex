@@ -7,17 +7,19 @@ defmodule RestApiWeb.Router do
 
   scope "/api", RestApiWeb do
     pipe_through :api
-    post "/users" , UserController, :create
-    get "/users/#{id}" , UserController, :index
-    get "/users/#{id}" , UserController, :show
-    put "/users/#{id}" , UserController, :update
-    delete "/users/#{id}" , UserController, :delete
-    get "/clocks/#{id}" , ClockController, :index
-    post "/clocks/#{id}" , ClockController, :create
-    get "workingtimes/#{userid}/#{id}" , WorkingtimeController, :index
-    post "workingtimes/#{userid}" , WorkingtimeController, :create
-    put "workingtimes/#{userid}/#{id}" , WorkingtimeController, :update
-    delete "workingtimes/#{id}" , WorkingtimeController, :delete
+    post "users", UserController, :create
+    put "users/:id", UserController, :update
+    delete "users/:id", UserController, :delete
+    get "users/:id", UserController, :show
+    get "users/:email/:username", UserController, :indexmail
+    post "clocks/:id" , ClockController, :create
+    get "clocks/:user_id", ClockController, :show
+    get "workingtimes", WorkingtimeController, :index
+    get "workingtimes/:userId/:id", WorkingtimeController, :show
+    post "workingtimes/:id", WorkingtimeController, :create
+    put "workingtimes/:id", WorkingtimeController, :update
+    delete "workingtimes/:id", WorkingtimeController, :delete
+
   end
 
 

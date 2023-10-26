@@ -7,13 +7,17 @@ defmodule RestApiWeb.UserControllerTest do
 
   @create_attrs %{
     email: "some email",
-    name: "some name"
+    name: "some name",
+    password: "some password",
+    role: "some role"
   }
   @update_attrs %{
     email: "some updated email",
-    name: "some updated name"
+    name: "some updated name",
+    password: "some updated password",
+    role: "some updated role"
   }
-  @invalid_attrs %{email: nil, name: nil}
+  @invalid_attrs %{email: nil, name: nil, password: nil, role: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -36,7 +40,9 @@ defmodule RestApiWeb.UserControllerTest do
       assert %{
                "id" => ^id,
                "email" => "some email",
-               "name" => "some name"
+               "name" => "some name",
+               "password" => "some password",
+               "role" => "some role"
              } = json_response(conn, 200)["data"]
     end
 
@@ -58,7 +64,9 @@ defmodule RestApiWeb.UserControllerTest do
       assert %{
                "id" => ^id,
                "email" => "some updated email",
-               "name" => "some updated name"
+               "name" => "some updated name",
+               "password" => "some updated password",
+               "role" => "some updated role"
              } = json_response(conn, 200)["data"]
     end
 

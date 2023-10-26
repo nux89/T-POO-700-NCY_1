@@ -6,6 +6,8 @@ defmodule RestApi.Repo.Migrations.CreateUsers do
       add :id, :binary_id, primary_key: true
       add :name, :string
       add :email, :string
+      add :role, :string, default: "user"
+      add :password, :string, default: "123456"
 
       timestamps(type: :utc_datetime)
     end

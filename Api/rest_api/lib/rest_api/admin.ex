@@ -133,6 +133,10 @@ defmodule RestApi.Admin do
   """
   def get_clock!(id), do: Repo.get!(Clock, id)
 
+  def get_clock_by_user_id(user_id) do
+    Repo.get_by(Clock, user_id: user_id)
+  end
+
   @doc """
   Creates a clock.
 

@@ -25,6 +25,12 @@ defmodule RestApiWeb.UserController do
     render(conn, :show, user: user)
   end
 
+  def indexmail(conn, %{"email" => email, "user" => user_params}) do
+    user = Admin.get_user!(email)
+    render(conn, :show, user: user)
+  end
+
+
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Admin.get_user!(id)
 

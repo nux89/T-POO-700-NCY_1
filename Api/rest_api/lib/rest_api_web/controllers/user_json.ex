@@ -19,7 +19,9 @@ defmodule RestApiWeb.UserJSON do
     %{
       id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      role: user.role,
+      password: user.password
     }
   end
 end

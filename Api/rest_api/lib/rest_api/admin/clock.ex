@@ -8,6 +8,7 @@ defmodule RestApi.Admin.Clock do
   schema "clocks" do
     field :status, :boolean, default: false
     field :time, :naive_datetime
+    field :user_id, :binary_id
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +16,7 @@ defmodule RestApi.Admin.Clock do
   @doc false
   def changeset(clock, attrs) do
     clock
-    |> cast(attrs, [:time, :status])
+    |> cast(attrs, [:time, :status, :user_id])
     |> validate_required([:time, :status])
   end
 end

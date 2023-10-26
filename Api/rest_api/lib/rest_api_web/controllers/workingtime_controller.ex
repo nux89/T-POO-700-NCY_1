@@ -12,13 +12,14 @@ defmodule RestApiWeb.WorkingtimeController do
   end
 
   def create(conn, %{"workingtime" => workingtime_params}) do
-    with {:ok, %Workingtime{} = workingtime} <- Admin.create_workingtime(workingtime_params) do
+    with {:ok, %Workingtime{} = workingtime} <- Admin.create_workingtime(Map.put(workingtime_params, "user_id", conn.params["id"])) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/workingtimes/#{workingtime}")
       |> render(:show, workingtime: workingtime)
     end
   end
+
 
   def show(conn, %{"id" => id}) do
     workingtime = Admin.get_workingtime!(id)

@@ -46,4 +46,8 @@ defmodule RestApiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug RestApiWeb.Router
+  plug CORSPlug,
+  origins: "http://localhost:5173/",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    headers: ["authorization", "content-type", "accept", "x-requested-with"]
 end

@@ -1,4 +1,5 @@
 <script>
+  import "./register/auth.scss";
   import FusionCharts from "fusioncharts";
   import Charts from "fusioncharts/fusioncharts.charts";
 
@@ -9,6 +10,8 @@
   import moment from "moment";
   import SvelteHeatmap from "svelte-heatmap";
   import Timeseries from 'fusioncharts/fusioncharts.timeseries';
+  import NavBar from "$lib/navbar/NavBar.svelte";
+
 
   let promise,
     jsonify = res => res.json(),
@@ -96,7 +99,9 @@
 
   console.log(fakeData);
 </script>
-
+    <div class="bg">
+</div>
+<NavBar />
 <div class="time-manager">
   <div class="time-manager-container">
     <div id="chart-container">
@@ -172,21 +177,17 @@
 
   <div class="bloc-recherche">
     <div class="recherche">
-      <input type="text" placeholder="Rechercher un employé" />
+        <div class="form-floating">
+            <input
+                type="email"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                required
+            />
+            <label for="floatingInput">Rechercher un employé</label>
+        </div>
       <div class="liste-employe">
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
-        <button>hello</button>
         <button>hello</button>
         <button>hello</button>
         <button>hello</button>
@@ -212,6 +213,29 @@
 </div> -->
 
 <style>
+:global(body) {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+  background-image: linear-gradient(#2e2e2f, #1a1f27);
+  border: 0;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: Montserrat,sans-serif;
+  font-size: .9em;
+  margin: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+  
   .container {
     border: 1px solid;
     padding: 20px;
@@ -220,6 +244,7 @@
   .time-manager {
     display: flex;
     flex-wrap: wrap;
+    gap: 10em;
   }
 
   .time-manager-container {
@@ -229,6 +254,8 @@
   .liste-employe {
     display: flex;
     flex-direction: column;
+    height: 37em;
+    overflow: auto;
   }
 
   .bloc-recherche {

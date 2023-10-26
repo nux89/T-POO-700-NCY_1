@@ -30,6 +30,7 @@ defmodule RestApiWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :rest_api
   end
 
+  plug Corsica, origins: "http://localhost:5173", allow_headers: ["content-type"]
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"
@@ -46,12 +47,4 @@ defmodule RestApiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug RestApiWeb.Router
-  plug CORSPlug,
-    origins: "*",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-  plug CORSICA,
-    origins: "http://localhost:5173/",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    headers: ["authorization", "content-type", "accept", "x-requested-with"]
-
 end

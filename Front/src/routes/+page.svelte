@@ -11,6 +11,9 @@
   import SvelteHeatmap from "svelte-heatmap";
   import Timeseries from 'fusioncharts/fusioncharts.timeseries';
   import NavBar from "$lib/navbar/NavBar.svelte";
+	import data from "./data.json";
+  import LineChart from "./LineChart.svelte";
+
 
 
   let promise,
@@ -79,6 +82,7 @@
     return data;
   }
 
+
   const fakeData = generateFakeData();
 
   fcRoot(FusionCharts, Charts, FusionTheme, Timeseries);
@@ -102,6 +106,7 @@
     <div class="bg">
 </div>
 <NavBar />
+<LineChart {data} />
 <div class="time-manager">
   <div class="time-manager-container">
     <div id="chart-container">

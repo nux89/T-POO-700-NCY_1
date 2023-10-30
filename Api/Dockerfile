@@ -17,6 +17,7 @@ WORKDIR /app
 
 RUN mix deps.get
 
+
 EXPOSE 4000
 
 CMD ["sh","/app/entrypoint.sh"]

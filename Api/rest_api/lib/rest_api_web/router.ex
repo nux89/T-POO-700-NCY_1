@@ -11,7 +11,7 @@ defmodule RestApiWeb.Router do
     put "users/:id", UserController, :update
     delete "users/:id", UserController, :delete
     get "users/:id", UserController, :show
-    get "users/:email/:username", UserController, :indexmail
+    get "users/:email/:username", UserController, :indexmails
     post "clocks/:id" , ClockController, :create
     get "clocks/:user_id", ClockController, :show
     get "workingtimes", WorkingtimeController, :index

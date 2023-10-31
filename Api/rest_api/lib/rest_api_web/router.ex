@@ -10,6 +10,7 @@ defmodule RestApiWeb.Router do
     post "users", UserController, :create
     put "users/:id", UserController, :update
     delete "users/:id", UserController, :delete
+    get "users", UserController, :index
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
     post "clocks/:id" , ClockController, :create

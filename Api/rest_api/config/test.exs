@@ -9,7 +9,7 @@ config :rest_api, RestApi.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "rest_api_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "restapi",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 

@@ -9,6 +9,7 @@ defmodule RestApi.Admin.User do
     field :name, :string
     field :role, :string
     field :password, :string
+    field :team, :string, default: "AUCUN"
 
 
     timestamps(type: :utc_datetime)

@@ -14,7 +14,7 @@
         redirect: 'follow'
       };
 
-      fetch(`http://localhost:4002/api/users/`+ email + "/name", requestOptions)
+      fetch(`${PUBLIC_URL_API}/api/users/`+ email + "/name", requestOptions)
         .then(response => response.text())
         .then(result => {console.log(result)
           user = JSON.parse(result)

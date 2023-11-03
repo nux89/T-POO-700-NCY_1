@@ -27,4 +27,11 @@
     right: 0;
     top: 0;
     }
+
+    :global(.hamburger button) {
+        position: relative;
+        z-index: 8;
+    }
+
+
 </style>

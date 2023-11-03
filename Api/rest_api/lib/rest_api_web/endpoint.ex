@@ -30,7 +30,7 @@ defmodule RestApiWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :rest_api
   end
 
-  plug Corsica, origins: "http://localhost:5173", allow_headers: ["content-type"]
+  plug Corsica, origins: "*", allow_headers: ["content-type"]
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"

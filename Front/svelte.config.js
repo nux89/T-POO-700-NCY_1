@@ -11,5 +11,6 @@ export default {
 			precompress: false,
 			strict: true
 		})
+
 	}
 };

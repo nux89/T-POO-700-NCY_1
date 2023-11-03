@@ -3,6 +3,8 @@
   import { get } from "svelte/store";
     import "../register/auth.scss";
     
+  import { PUBLIC_URL_API } from '$env/static/public';    
+    
     function getUserFromStorage() {
         const user = localStorage.getItem("user");
         if (user) {
@@ -21,7 +23,7 @@
         redirect: 'follow'
       };
 
-      fetch("http://localhost:4002/api/clocks/" + user.data.id , requestOptions)
+      fetch(PUBLIC_URL_API+"/api/clocks/" + user.data.id , requestOptions)
         .then(response => response.text())
         .then(result => localStorage.setItem("clocks", result))
         .catch(error => console.log('error', error));
@@ -58,7 +60,7 @@
         redirect: 'follow'
       };
 
-      fetch("http://localhost:4002/api/clocks/" + user.data.id , requestOptions)
+      fetch(PUBLIC_URL_API+"/api/clocks/" + user.data.id , requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -96,7 +98,7 @@
         redirect: 'follow'
       };
 
-      fetch("http://localhost:4002/api/workingtimes/" + user.data.id , requestOptions)
+      fetch(PUBLIC_URL_API+"/api/workingtimes/" + user.data.id , requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

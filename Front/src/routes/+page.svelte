@@ -7,6 +7,7 @@
   import { GET } from "../lib/utils"
   import { slide } from "svelte/transition";
   import { Toaster, toast } from 'svelte-sonner'
+  import { PUBLIC_URL_API } from '$env/static/public';
 
   fcRoot(FusionCharts, Timeseries);
 
@@ -31,7 +32,7 @@ getTeams()
 
 const changeTeam = (id) => {
   console.log("CHANGE:", selected);
-  const r = fetch("http://127.0.0.1:4002/api/users/" + id, {
+  const r = fetch(PUBLIC_URL_API+"/api/users/" + id, {
       method: "put",
       headers: {
           "Content-Type": "application/json",
@@ -94,7 +95,7 @@ const changeTeam = (id) => {
       "https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/area-chart-with-time-axis-schema.json"
     ).then(jsonify);
     let getListEmployee = fetch(
-      "http://localhost:4002/api/users"
+      PUBLIC_URL_API+"/api/users"
     ).then(jsonify)
     .then((v) => {
       employees = v.data
@@ -138,7 +139,7 @@ const changeTeam = (id) => {
     console.log("NAME", name);
     if (name == 'tout') {
     let getListEmployee = fetch(
-      "http://localhost:4002/api/users"
+      PUBLIC_URL_API+"/api/users"
     ).then(jsonify)
     .then((v) => {
       employees = v.data

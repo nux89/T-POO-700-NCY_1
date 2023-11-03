@@ -7,7 +7,7 @@
 
 {#if open}
 <nav class="navbar navbar-expand-lg" transition:fade={{duration: 300}} style="z-index: {open ? 1 : 0}">
-        <a class="navbar-brand text-white" href="/"><i class="fa fa-graduation-cap fa-lg mr-2"></i>TimeManager</a>
+        <a class="navbar-brand text-white" id="home" href="/" on:click={() => open = false}><i class="fa fa-graduation-cap fa-lg mr-2"></i>TimeManager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,7 +25,7 @@
 </nav>
 {/if}
 
-<style>
+<style lang="scss">
     ul {
   list-style-type: none;
   margin: 0;
@@ -70,10 +70,6 @@
 }
 
 ul {
-    /* height: 51%;
-    font-size: 2em;
-    gap: 1em;
-    flex-wrap: wrap; */
 font-size: 3em;
   margin: auto;
   width: 50%;
@@ -83,5 +79,34 @@ font-size: 3em;
     justify-content: center;
     gap: 1em;
 }
+
+.navbar-brand {
+    font-size: 2em;
+}
+
+a:link {
+  color: #bce8f1 !important;
+}
+
+/* visited link */
+a:visited {
+  color: #0cb2d4 !important;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink !important;
+}
+
+/* selected link */
+a:active {
+  color: rgb(0, 221, 255) !important;
+}
+
+#home {
+    color: white !important;
+}
+
+
 
 </style>

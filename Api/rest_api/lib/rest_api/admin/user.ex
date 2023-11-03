@@ -18,7 +18,7 @@ defmodule RestApi.Admin.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :role, :password])
+    |> cast(attrs, [:name, :email, :role, :password, :team])
     |> validate_required([:name, :email, :role, :password])
   end
 end

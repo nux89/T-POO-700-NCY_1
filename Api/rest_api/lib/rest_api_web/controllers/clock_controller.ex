@@ -21,9 +21,11 @@ defmodule RestApiWeb.ClockController do
   end
 
   def show(conn, %{"user_id" => user_id}) do
-    clock = Admin.get_clock_by_user_id(user_id)
-    render(conn, :show, clock: clock)
+    clocks = Admin.get_clocks_by_user_id(user_id)
+    render(conn, :index, clocks: clocks)
   end
+
+
 
   def update(conn, %{"id" => id, "clock" => clock_params}) do
     clock = Admin.get_clock!(id)

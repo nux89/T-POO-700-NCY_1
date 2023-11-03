@@ -141,6 +141,11 @@ defmodule RestApi.Admin do
     Repo.get_by(Clock, user_id: user_id)
   end
 
+  def get_clocks_by_user_id(user_id) do
+    Repo.all(Clock, user_id: user_id)
+
+  end
+
   @doc """
   Creates a clock.
 

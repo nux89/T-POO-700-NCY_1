@@ -163,7 +163,7 @@ const changeTeam = (id) => {
       {:then value}
         <SvelteFC {...getChartConfig(value)} />
       {:catch error}
-        <p>Something went wrong: {error.message}</p>
+        <p>Something went wrrrrrrrrong: {error.message}</p>
       {/await}
     </div>
   </div>

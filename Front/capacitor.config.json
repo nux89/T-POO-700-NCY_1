@@ -1,0 +1,8 @@
+{
+  "appId": "com.time.app",
+  "appName": "time",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -12,6 +12,7 @@ defmodule RestApiWeb.Router do
     delete "users/:id", UserController, :delete
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
+    get "users", UserController, :index
     post "clocks/:id" , ClockController, :create
     get "clocks/:user_id", ClockController, :show
     get "workingtimes", WorkingtimeController, :index
@@ -19,6 +20,11 @@ defmodule RestApiWeb.Router do
     post "workingtimes/:id", WorkingtimeController, :create
     put "workingtimes/:id", WorkingtimeController, :update
     delete "workingtimes/:id", WorkingtimeController, :delete
+    post "team", TeamController, :create
+    get "team/:id", TeamController, :show
+    put "team/:id", TeamController, :update
+    delete "team/:id", TeamController, :delete
+    get "team", TeamController, :index
 
   end
 

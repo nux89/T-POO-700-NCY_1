@@ -9,6 +9,7 @@ defmodule RestApi.Admin.User do
     field :name, :string
     field :role, :string
     field :password, :string
+    field :team, :string
 
 
     timestamps(type: :utc_datetime)
@@ -17,7 +18,7 @@ defmodule RestApi.Admin.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :role, :password])
-    |> validate_required([:name, :email, :role, :password])
+    |> cast(attrs, [:name, :email, :role, :password, :team])
+    |> validate_required([:name, :email, :role, :password, :team])
   end
 end

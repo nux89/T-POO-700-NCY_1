@@ -48,4 +48,18 @@ defmodule RestApi.AdminFixtures do
 
     workingtime
   end
+
+  @doc """
+  Generate a team.
+  """
+  def team_fixture(attrs \\ %{}) do
+    {:ok, team} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> RestApi.Admin.create_team()
+
+    team
+  end
 end

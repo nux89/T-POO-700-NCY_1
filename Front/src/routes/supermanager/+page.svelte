@@ -118,9 +118,8 @@ function findTeamById(id) {
 GetAllUsers()
 getTeam()
 
-function Show() {
-    console.log(teamData)
-    console.log(usersData)
+function Show(user) {
+    console.log(user)
 }
 
 </script>

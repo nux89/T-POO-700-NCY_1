@@ -1,6 +1,7 @@
 <script>
     import NavBar from "$lib/navbar/NavBar.svelte";
     import "../register/auth.scss";
+    import { PUBLIC_URL_API } from '$env/static/public';
     let user
 
     function login(e) {

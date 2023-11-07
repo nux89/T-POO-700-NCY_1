@@ -19,7 +19,9 @@
 
 
 <title>TIME MANAGER</title>
+<div>
 <slot />
+</div>
 
 <style>
     .hamburger {

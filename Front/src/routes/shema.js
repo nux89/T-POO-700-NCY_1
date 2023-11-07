@@ -1,8 +1,9 @@
+export default 
 [
   {
     "name": "Time",
     "type": "date",
-    "format": "yyyy-MM-dd HH:mm:ss"
+    "format": "%Y-%m-%d"
   },
   {
     "name": "Daily Visitors",

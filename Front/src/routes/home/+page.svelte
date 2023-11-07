@@ -16,7 +16,7 @@
         return null;
     }
 
-    function getclocks() {
+    async function getclocks() {
       console.log("getclocks")
 
       let user = getUserFromStorage();
@@ -26,14 +26,16 @@
         redirect: 'follow'
       };
 
-      fetch("http://localhost:4002/api/clocks/" + user.data.id , requestOptions)
+      await fetch("http://localhost:4002/api/clocks/" + user.data.id , requestOptions)
         .then(response => response.text())
         .then(result => localStorage.setItem("clocks", result))
         .catch(error => console.log('error', error));
+      console.log(JSON.parse(localStorage.getItem("clocks")))
     }
 
-    function createClock() {
-      getclocks()
+    async function createClock() {
+      await getclocks()
+      console.log(JSON.parse(localStorage.getItem("clocks")))
       let user = getUserFromStorage();
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -45,12 +47,15 @@
           "time": new Date()
         }
       }
-      
-      if (clocks.data[clocks.data.length - 1] == undefined) {
+      console.log(clocks.data[clocks.data.length - 1])
+      if (clocks.data[clocks.data.length-1] == undefined) {
+        console.log("undefined debug")
         newclock.clock.status = true
-      } else if (clocks.data[clocks.data.length - 1].status == true) {
+      } else if (clocks.data[clocks.data.length-1].status == true) {
+        console.log("true debug")
         newclock.clock.status = false
-      } else if (clocks.data[clocks.data.length - 1].status == false) {
+      } else if (clocks.data[clocks.data.length-1].status == false) {
+        console.log("false debug")
         newclock.clock.status = true
       }
       

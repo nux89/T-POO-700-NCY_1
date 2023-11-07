@@ -1,6 +1,7 @@
 <script>
     import "./auth.scss";
     import NavBar from "$lib/navbar/NavBar.svelte";
+    import { PUBLIC_URL_API } from '$env/static/public';    
     import { POST, GET } from "$lib/utils";
     function validationFormulaire(e) {
         const formData = new FormData(e.target);
@@ -11,7 +12,7 @@
             data[key] = value;
         }
 
-        const r = fetch("http://127.0.0.1:4002/api/users/", {
+        const r = fetch(PUBLIC_URL_API+ "/api/users/", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",

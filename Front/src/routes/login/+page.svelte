@@ -1,8 +1,3 @@
-<svelte:head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-</svelte:head>
-
 <script>
     import NavBar from "$lib/navbar/NavBar.svelte";
     import "../register/auth.scss";
@@ -19,7 +14,7 @@
         redirect: 'follow'
       };
 
-      fetch(`http://localhost:4002/api/users/`+ email + "/name", requestOptions)
+      fetch(`${PUBLIC_URL_API}/api/users/`+ email + "/name", requestOptions)
         .then(response => response.text())
         .then(result => {console.log(result)
           user = JSON.parse(result)

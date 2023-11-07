@@ -1,11 +1,19 @@
 [
-  {
-    "name": "Time",
-    "type": "date",
-    "format": "%Y-%m-%d %H-%M"
-  },
-  {
-    "name": "Daily hours",
-    "type": "number"
-  }
+    {
+        "name": "Time",
+        "type": "date",
+        "format": "%Y-%m-%d",
+        "column": "Time",
+        "index": 0
+    },
+    {
+        "name": "Daily Visitors",
+        "type": "number",
+        "column": "Daily Visitors",
+        "index": 1
+    },
+    {
+        "name": "_row_id",
+        "type": "string"
+    }
 ]

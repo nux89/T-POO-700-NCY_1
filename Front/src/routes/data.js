@@ -1,9 +1,10 @@
 // A shortened version of the data is given here.
 // Please check the link below to see the complete data:
 // https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/column-chart-with-time-axis-data.json
-export default [
+export default 
+[
   [
-    "2023-10-30",
+    "2016-01-01",
     5
   ],
   [

@@ -3,8 +3,9 @@
     import NavBar from "$lib/navbar/NavBar.svelte";
     import { onMount } from "svelte";
     import { Toaster, toast } from 'svelte-sonner'
+    import { PUBLIC_URL_API } from '$env/static/public';
     let jsonId;
-    let url = "http://127.0.0.1:4002/api/users/";
+    let url = PUBLIC_URL_API+"/api/users/";
 
     function checkIfConnected() {
         const id = localStorage.getItem('user')
@@ -19,7 +20,7 @@
     async function getUserData() {
         const id = checkIfConnected();
 
-        const res = await fetch(url + id)
+        const res = await fetch(PUBLIC_URL_API+"/api/users/"+ id)
         .then(e => e.json())
         .then((e) => e);
         return res.data;
@@ -35,7 +36,7 @@
             data[key] = value;
         }
 
-        const r = fetch(url + id, {
+        const r = fetch(PUBLIC_URL_API+"/api/users/"+ id, {
             method: "put",
             headers: {
                 "Content-Type": "application/json",

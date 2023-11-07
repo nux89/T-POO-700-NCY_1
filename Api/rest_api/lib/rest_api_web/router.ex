@@ -7,9 +7,11 @@ defmodule RestApiWeb.Router do
 
   scope "/api", RestApiWeb do
     pipe_through :api
+    resources "/teams", TeamController, except: [:new, :edit]
     post "users", UserController, :create
     put "users/:id", UserController, :update
     delete "users/:id", UserController, :delete
+    get "users", UserController, :index
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
     get "users", UserController, :index

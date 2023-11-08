@@ -49,7 +49,14 @@
 
   onMount(() => {
     infoUser = getUserFromStorage();
+    console.log("????",infoUser);
+    if (!infoUser) {
+      window.location.href = "/login";
+    }
     role = infoUser.data.role;
+    if (role == "employee") {
+      requestDataUserID(infoUser.data.id, infoUser.data.name, true)
+    }
   })
 
   const fusionTableGo = (d) => {
@@ -90,14 +97,52 @@
       ["2016-01-02", 90],
     ]);
   };
+  // const requestDataUserID = (id) => {
+  //   console.log("ID", id);
+  //   const rep = GET(`/api/workingtimes`)
+  //   .then(v => {
+  //     v.data.map((w) => {
+  //       var date1 = new Date(w.start);
+  //       console.log(date1);
+  //       var date2 = new Date(w.end);
 
-  const requestDataUserID = (id, payload) => {
+  //       // Convertissez les dates en timestamps Unix (en millisecondes)
+  //       var timestamp1 = date1.getTime();
+  //       var timestamp2 = date2.getTime();
+
+  //       // Calculez la différence en millisecondes
+  //       var differenceInMilliseconds = timestamp2 - timestamp1;
+
+  //       // Convertissez la différence en heures
+  //       var differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
+
+  //       console.log("Différence en heures : " + differenceInHours);
+
+  //       console.log("ID:", id);
+        
+
+
+  //       // console.log(w.end, w.start);
+  //     })
+  //   })
+  // }
+  const requestDataUserID = (id, payload, specific = false) => {
     showContent = payload === showContent ? "" : payload;
 
     console.log("ID", id);
+
+    if (specific) {
     const rep = GET(`/api/workingtimes`).then((v) => {
-      console.log(v);
+      v.data.map((e) => {
+        console.log(e.user_id);
+      })
     });
+    } else {
+    const rep = GET(`/api/workingtimes`).then((v) => {
+      console.log("INFO WORKIn", v);
+      v.data
+    });
+    }
   };
 
   async function fetchEmployee() {

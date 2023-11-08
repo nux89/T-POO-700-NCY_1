@@ -9,6 +9,7 @@
   import { PUBLIC_URL_API } from '$env/static/public';    
   import { Toaster, toast } from 'svelte-sonner'
   import Select from "$lib/Select.svelte";
+    import { onMount } from "svelte";
 
   fcRoot(FusionCharts, Timeseries);
 
@@ -36,6 +37,20 @@
   let selectedTeam = "tout";
   let selected = [];
   let showContent = "";
+  let role;
+  let infoUser;
+  function getUserFromStorage() {
+      const user = localStorage.getItem("user");
+      if (user) {
+          return JSON.parse(user);
+      }
+      return null;
+  }
+
+  onMount(() => {
+    infoUser = getUserFromStorage();
+    role = infoUser.data.role;
+  })
 
   const fusionTableGo = (d) => {
     return fusionDataStore.createDataTable(d, shema);
@@ -125,6 +140,7 @@ const changeTeam = (id, idx) => {
 {#await promise}
   <h1>Chargement</h1>
 {:then { data }}
+{#if role != "employee"}
   <div class="bloc-recherche">
     <div class="recherche">
       <div class="form-floating">
@@ -188,29 +204,28 @@ const changeTeam = (id, idx) => {
       </ul>
 
       {/await}
-
-      <div class="liste-employe">
-        <!-- {#if valeurRecherge} -->
-        <!-- {#each data as employe} -->
-        <!-- {console.log(employe)} -->
-        <!-- <button on:click={() => requestDataUserID(employe.id, employe.name)}>{employe.name}</button> -->
-        <!-- {#if showContent === employe.name}
-                <div transition:slide={{ duration: 400 }}>
-                  <div>email: {employe.email}</div>
-                  <div>role: {employe.role}</div>
-                  <div>equipe: <select name="team" id="team" bind:value={selected} on:change={() => changeTeam(employe.id)}>
-                    {#each teams.data as val}
-                        <option selected="{val.name == employe.team}" value="{val.name}">{val.name}</option>
-                    {/each}
-                  </select>
-                  </div>
-                </div>
-              {/if} -->
-        <!-- {/each} -->
-        <!-- {/if} -->
-      </div>
     </div>
   </div>
+{:else}
+<div style="display: flex; justify-content: center; align-items: center;">
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Welcome <span style="font-weight: bold;color: cornflowerblue;">{infoUser.data.name}</span>,</h5>
+    <p class="card-text">User informations.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><span style="font-weight: bold;">Email</span>: {infoUser.data.email}</li>
+    <li class="list-group-item"><span style="font-weight: bold;">Role</span>: {infoUser.data.role}</li>
+    <li class="list-group-item"><span style="font-weight: bold;">Team</span>: {infoUser.data.team}</li>
+  </ul>
+  <div class="card-body">
+    <a href="/profile" class="card-link">Modifier</a>
+  </div>
+</div>
+</div>
+{/if}
+
 {/await}
 
 <style lang="scss">

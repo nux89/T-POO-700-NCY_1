@@ -114,7 +114,6 @@ const changeTeam = (id, idx) => {
 
 </script>
 <Toaster position="top-center" />
-<div class="bg" />
 
 <div id="chart-container">
   <SvelteFC {...chartConfig} />
@@ -131,7 +130,7 @@ const changeTeam = (id, idx) => {
       <div class="form-floating">
         <input
           type="email"
-          class="form-control"
+          class="form-control mb-2"
           id="floatingInput"
           placeholder="name@example.com"
           required
@@ -164,12 +163,13 @@ const changeTeam = (id, idx) => {
           >
           <!-- <Select options={teams.data} bind:value={selected}></Select> -->
           <select
-            style="flex: 1"
             bind:value={selected[i]}
             on:change={() => changeTeam(employe.id, i)}
+            class="group-team-emp"
             name="group"
             id="group-team"
           >
+          {console.log(data)}
             {#each teams.data as val}
               <option value={val.name} selected={val.name == employe.team ? true : false}>{val.name}</option>
               {console.log(val.name, employe.team)}
@@ -213,15 +213,39 @@ const changeTeam = (id, idx) => {
   </div>
 {/await}
 
-<style>
+<style lang="scss">
+
+  .bloc-recherche {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   :global(.list-group-item.active) {
     background-color: #212529;
   }
 
+  .recherche {
+    width: 50vw;
+    @media screen and (max-width: 480px) {
+        width: auto;
+    }
+  }
+
+.group-team-emp {
+  flex: 1;
+    @media screen and (max-width: 480px) {
+        flex: 4;
+    }
+}
+
   #group-team {
     width: 100%;
   }
-  .bg {
+
+#chart-container {
+  padding-top: 4em;
+}
+  :global(.bg) {
     position: absolute;
     z-index: -1;
     top: 0;

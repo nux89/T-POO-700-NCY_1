@@ -3,6 +3,9 @@
     import NavBar from "$lib/navbar/NavBar.svelte";
     import { PUBLIC_URL_API } from '$env/static/public';    
     import { POST, GET } from "$lib/utils";
+    import { fade } from "svelte/transition";
+//   import { fade, blur, fly, slide, scale } from "svelte/transition";
+//   import { quintOut } from "svelte/easing";
     function validationFormulaire(e) {
         const formData = new FormData(e.target);
 
@@ -28,11 +31,10 @@
 </script>
 
 <NavBar />
-<div class="bg" />
 <main class="form-signin">
     <h1 class="h3">Register</h1>
 
-    <form on:submit|preventDefault={validationFormulaire}>
+    <form on:submit|preventDefault={validationFormulaire} in:fade>
         <div class="form-floating">
             <input
                 type="email"
@@ -68,7 +70,7 @@
         </div>
 
         <div class="form-floating">
-            <select name="role" id="role">
+            <select name="role" id="role" class="form-select" disabled>
                 <option value="employee">Employee</option>
                 <option value="manager">Manager</option>
             </select>
@@ -78,21 +80,13 @@
     </form>
 </main>
 
-<!-- <div class="form-container">
-<form on:submit|preventDefault={validationFormulaire}>
-    <h1>Registration</h1>
-    <label for="email">Email</label>
-    <input type="email" name="email" />
-
-    <label for="name">Name</label>
-    <input type="text" name="name" />
-
-    <label for="password">Password</label>
-    <input type="password" name="password" />
-
-    <label for="passwordConfirmation">Password Confirmation</label>
-    <input type="password" name="passwordConfirmation" />
-
-    <button disabled={true} on:click|preventDefault> Submit </button>
-</form>
-</div> -->
+<style>
+    #role {
+        height: 3em;
+        background: #8080804a;
+        color: white;
+        margin-bottom: 1em;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+</style>

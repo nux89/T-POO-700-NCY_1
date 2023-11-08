@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import { Toaster, toast } from 'svelte-sonner'
     import { PUBLIC_URL_API } from '$env/static/public';
+    import { fade } from "svelte/transition";
     let jsonId;
     let url = PUBLIC_URL_API+"/api/users/";
 
@@ -54,14 +55,13 @@
 <NavBar />
  <Toaster position="top-center" />
 
-<div class="bg" />
 
 <main class="form-signin">
     <h1 class="h3">Profile</h1>
 {#await getUserData()}
 <p>Chargement...</p>    
 {:then data} 
-    <form on:submit|preventDefault={validationFormulaire}>
+    <form on:submit|preventDefault={validationFormulaire} in:fade>
         <div class="form-floating">
             <input
                 type="email"

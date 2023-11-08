@@ -2,6 +2,7 @@
     import NavBar from "$lib/navbar/NavBar.svelte";
     import "../register/auth.scss";
     import { PUBLIC_URL_API } from '$env/static/public';
+    import { fade } from "svelte/transition";
     let user
 
     function login(e) {
@@ -35,14 +36,12 @@
 </script>
 
 <NavBar />
-<div class="bg">
-</div>
 
   <main class="form-signin">
-    
+
       <h1 class="h3">Login</h1>
     
-    <form on:submit|preventDefault={login}>
+    <form on:submit|preventDefault={login} in:fade>
 
 
       <div class="form-floating">

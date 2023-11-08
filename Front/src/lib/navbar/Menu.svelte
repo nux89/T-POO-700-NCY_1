@@ -6,7 +6,7 @@
 </script>
 
 {#if open}
-<nav class="navbar navbar-expand-lg" transition:fade={{duration: 300}} style="z-index: {open ? 1 : 0}">
+<nav class="navbar navbar-expand-lg" transition:fade={{duration: 150}} style="z-index: {open ? 4 : 0}">
         <a class="navbar-brand text-white" id="home" href="/" on:click={() => open = false}><i class="fa fa-graduation-cap fa-lg mr-2"></i>TimeManager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
             <span class="navbar-toggler-icon"></span>

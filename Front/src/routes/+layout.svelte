@@ -19,14 +19,27 @@
 
 
 <title>TIME MANAGER</title>
-<div>
-<slot />
+
+<div class="bg" />
+<div class="main-slot">
+    <div style="width: 100%">
+        <slot />
+    </div>
 </div>
 
 <style>
+    .main-slot {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
+        position: relative;
+    }
     .hamburger {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     }
 

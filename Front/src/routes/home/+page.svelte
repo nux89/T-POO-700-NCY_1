@@ -116,17 +116,23 @@
 </script>
 
 <NavBar />
-<div class="bg">
-</div>
 
-  <main class="form-signin">
-    <button class="w-100 btn btn-lg" on:click={getclocks}>GET CLOCK</button>
-    <button class="w-100 btn btn-lg" on:click={createClock}>CREATE CLOCK</button>
-    <button class="w-100 btn btn-lg" on:click={CreateWorkingTime}>CREATE WORKING TIME</button>
-  </main>
-
+    <div class="btn-action">
+      <button class="w-100 form-signin btn btn-lg" on:click={getclocks}>GET CLOCK</button>
+      <button class="w-100 form-signin btn btn-lg" on:click={createClock}>CREATE CLOCK</button>
+      <button class="w-100 form-signin btn btn-lg" on:click={CreateWorkingTime}>CREATE WORKING TIME</button>
+    </div>
 
 <style>
+.btn-action {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.btn-action button {
+  border: 1px solid white;
+  color:white;
+}
 
 
     

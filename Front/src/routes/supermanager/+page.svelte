@@ -126,7 +126,6 @@ function Show() {
 </script>
 
 <main>
-    <div class="bg">
     <div class="content">
     <div class="container">
     <form on:submit|preventDefault={createTeam}> 
@@ -193,7 +192,6 @@ function Show() {
         </table>
     </div>
     
-</div>
 </div>
 </main>
 

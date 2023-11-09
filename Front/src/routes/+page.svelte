@@ -49,13 +49,12 @@
 
   onMount(() => {
     infoUser = getUserFromStorage();
-    console.log("????",infoUser);
     if (!infoUser) {
       window.location.href = "/login";
     }
     role = infoUser.data.role;
     if (role == "employee") {
-      requestDataUserID(infoUser.data.id, infoUser.data.name, true)
+      updateDataHandler(infoUser.data.id)
     }
   })
 
@@ -91,11 +90,45 @@
     },
   };
 
-  const updateDataHandler = () => {
-    chartConfig.dataSource.data = fusionTableGo([
-      ["2016-01-01", 5],
-      ["2016-01-02", 90],
-    ]);
+  const updateDataHandler = (id) => {
+
+      chartConfig.dataSource.data = []
+    const rep = GET(`/api/workingtimes`)
+    .then(v => {
+
+      let donnes = [];
+      let search;
+      if (id) {
+        console.log(",,,",v.data);
+        search = v.data.filter(v => v.user_id == id);
+        console.log(search);
+      } else {
+        search = v.data;
+      }
+
+      search.map((w) => {
+        var date1 = new Date(w.start);
+        var date2 = new Date(w.end);
+
+        // Convertissez les dates en timestamps Unix (en millisecondes)
+        var timestamp1 = date1.getTime();
+        var timestamp2 = date2.getTime();
+
+        // Calculez la différence en millisecondes
+        var differenceInMilliseconds = timestamp2 - timestamp1;
+
+        // Convertissez la différence en heures
+        var differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
+
+
+        // console.log("ID:", id);
+        donnes.push([w.start.split("T")[0],differenceInHours])
+
+        // console.log(w.end, w.start);
+      })
+
+      chartConfig.dataSource.data = fusionTableGo(donnes);
+    })
   };
   // const requestDataUserID = (id) => {
   //   console.log("ID", id);
@@ -129,7 +162,6 @@
   const requestDataUserID = (id, payload, specific = false) => {
     showContent = payload === showContent ? "" : payload;
 
-    console.log("ID", id);
 
     if (specific) {
     const rep = GET(`/api/workingtimes`).then((v) => {
@@ -139,7 +171,6 @@
     });
     } else {
     const rep = GET(`/api/workingtimes`).then((v) => {
-      console.log("INFO WORKIn", v);
       v.data
     });
     }
@@ -154,7 +185,6 @@
   let promise = fetchEmployee();
 
 const changeTeam = (id, idx) => {
-  console.log("CHANGE:", selected);
   const r = fetch(PUBLIC_URL_API+"/api/users/" + id, {
       method: "put",
       headers: {
@@ -177,9 +207,6 @@ const changeTeam = (id, idx) => {
 
 <div id="chart-container">
   <SvelteFC {...chartConfig} />
-  <button class="btn btn-outline-secondary btn-sm" on:click={updateDataHandler}
-    >Click to Update Data</button
-  >
 </div>
 
 {#await promise}
@@ -209,7 +236,7 @@ const changeTeam = (id, idx) => {
         >
           <option value="tout" selected>Tout</option>
           {#each teams.data as val}
-            <option value={val.name}>{val.name}</option>
+            <option value={val.name} on:click={() => updateDataHandler(val.id)}>{val.name}</option>
           {/each}
         </select>
       <ul class="list-group">
@@ -219,7 +246,7 @@ const changeTeam = (id, idx) => {
           <button
             class="list-group-item active"
             style="flex: 10"
-            on:click={() => requestDataUserID(employe.id, employe.name)}
+            on:click={() => updateDataHandler(employe.id)}
             >{employe.name}</button
           >
           <!-- <Select options={teams.data} bind:value={selected}></Select> -->
@@ -230,10 +257,8 @@ const changeTeam = (id, idx) => {
             name="group"
             id="group-team"
           >
-          {console.log(data)}
             {#each teams.data as val}
               <option value={val.name} selected={val.name == employe.team ? true : false}>{val.name}</option>
-              {console.log(val.name, employe.team)}
             {/each}
           </select>
         </div>
@@ -265,7 +290,7 @@ const changeTeam = (id, idx) => {
     <li class="list-group-item"><span style="font-weight: bold;">Team</span>: {infoUser.data.team}</li>
   </ul>
   <div class="card-body">
-    <a href="/profile" class="card-link">Modifier</a>
+    <a href="/profile" class="card-link">Edit</a>
   </div>
 </div>
 </div>
@@ -304,6 +329,7 @@ const changeTeam = (id, idx) => {
 
 #chart-container {
   padding-top: 4em;
+  padding-bottom: 2em;
 }
   :global(.bg) {
     position: absolute;

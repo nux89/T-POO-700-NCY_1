@@ -1,6 +1,28 @@
 <script>
-    import {page} from '$app/stores'
+    import { page } from '$app/stores';
     let pagename = $page.url.pathname.substr($page.url.pathname.lastIndexOf('/'));
+    let user = getUserFromStorage();
+
+    function getUserFromStorage() {
+        let user = localStorage.getItem("user");
+        if (user) {
+            return JSON.parse(user);
+        }
+        return null;
+    }
+
+    function getRoleFromStorage() {
+        let user = localStorage.getItem("user");
+        if (user) {
+            return JSON.parse(user).data.role;
+        }
+        return null;
+    }
+    
+    function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+    }
 </script>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -11,15 +33,25 @@
         </button>
         <div class="collapse navbar-collapse" id="nvbCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item pl-1">
-                    <a class="nav-link {pagename === '/profile' && 'active'}" href="/profile"><i class="fa fa-home fa-fw mr-1"></i>Profile</a>
-                </li>
-                <li class="nav-item active pl-1">
-                    <a class="nav-link {pagename === '/login' && 'active'}" href="/login"><i class="fa fa-th-list fa-fw mr-1"></i>Login</a>
-                </li>
-                <li class="nav-item pl-1">
-                    <a class="nav-link {pagename === '/register' && 'active'}" href="/register"><i class="fa fa-info-circle fa-fw mr-1"></i>Register</a>
-                </li>
+                {#if user}
+                <li class="nav-item pl-1"><a class="nav-link" href="#" on:click={logout}>Logout</a></li>
+                <li class="nav-item pl-1"><a class="nav-link" href="/profile">Profile</a></li>
+                {:else}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                {/if}
+                {#if getRoleFromStorage() === 'manager' }
+                    <li class="nav-item pl-1">
+                        <a class="nav-link {pagename === '/manager' && 'active'}" href="/manager"><i class="fa fa-info-circle fa-fw mr-1"></i>Manager</a>
+                    </li>
+                {/if}
+
+                {#if getRoleFromStorage() === 'supermanager' }
+                    <li class="nav-item pl-1">
+                        <a class="nav-link {pagename === '/supermanager' && 'active'}" href="/supermanager"><i class="fa fa-info-circle fa-fw mr-1"></i>Super-Manager</a>
+                    </li>
+                {/if}
+
             </ul>
         </div>
     </div>

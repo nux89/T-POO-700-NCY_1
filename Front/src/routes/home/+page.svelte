@@ -2,6 +2,8 @@
     import NavBar from "$lib/navbar/NavBar.svelte";
   import { get } from "svelte/store";
     import "../register/auth.scss";
+
+    let clocks;
     
   import { PUBLIC_URL_API } from '$env/static/public';    
     
@@ -14,10 +16,8 @@
     }
 
     async function getclocks() {
-      console.log("getclocks")
 
       let user = getUserFromStorage();
-      console.log(user.data.id)
       var requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -27,12 +27,12 @@
         .then(response => response.text())
         .then(result => localStorage.setItem("clocks", result))
         .catch(error => console.log('error', error));
-      console.log(JSON.parse(localStorage.getItem("clocks")))
+      clocks = JSON.parse(localStorage.getItem("clocks"));
+      return clocks
     }
 
     async function createClock() {
       await getclocks()
-      console.log(JSON.parse(localStorage.getItem("clocks")))
       let user = getUserFromStorage();
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -44,19 +44,16 @@
           "time": new Date()
         }
       }
-      console.log(clocks.data[clocks.data.length - 1])
-      if (clocks.data[clocks.data.length-1] == undefined) {
-        console.log("undefined debug")
+      if (clocks.data.length == 0) {
         newclock.clock.status = true
-      } else if (clocks.data[clocks.data.length-1].status == true) {
-        console.log("true debug")
-        newclock.clock.status = false
-      } else if (clocks.data[clocks.data.length-1].status == false) {
-        console.log("false debug")
-        newclock.clock.status = true
-      }
-      
+      } else {
+        if (clocks.data[clocks.data.length - 1].status == true) {
+          newclock.clock.status = false
+          CreateWorkingTime()
+        }
+     }
       var raw = JSON.stringify(newclock);
+
 
       var requestOptions = {
         method: 'POST',
@@ -70,12 +67,9 @@
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 
-      if (clocks.data[clocks.data.length - 1] == undefined) {
-        return
-      } else if (clocks.data[clocks.data.length - 1].status == true) {
-        CreateWorkingTime()
-      }
     }
+
+
 
 
     function CreateWorkingTime() {
@@ -84,15 +78,12 @@
 
       let workingtime = {
         "workingtime": {
-          "end": "2019-03-29T13:34:00.000",
+          "end": new Date(),
           "start": "2018-03-29T13:34:00.000"
         }
       } 
-
-      getclocks()
       let clocks = JSON.parse(localStorage.getItem("clocks"));
-      workingtime.workingtime.start = clocks.data[clocks.data.length - 2].time
-      workingtime.workingtime.end = clocks.data[clocks.data.length - 1].time
+      workingtime.workingtime.start = clocks.data[clocks.data.length - 1].time
       var raw = JSON.stringify(workingtime);
       let user = getUserFromStorage();
 
@@ -107,11 +98,11 @@
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
+        clocks = JSON.parse(localStorage.getItem("clocks"));
     }
 
-    function debug() {
-        console.log("debug")
-    }
+    getclocks()
+
     
 </script>
 

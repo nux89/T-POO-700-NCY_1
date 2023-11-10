@@ -15,6 +15,11 @@ defmodule RestApiWeb.UserJSON do
     %{data: data(user)}
   end
 
+  def show(nil) do
+    %{data: nil}
+  end
+
+
   defp data(%User{} = user) do
     %{
       id: user.id,
@@ -24,5 +29,9 @@ defmodule RestApiWeb.UserJSON do
       password: user.password,
       team: user.team
     }
+  end
+
+  def showbymail(%{user: user}) do
+    %{data: data(user)}
   end
 end

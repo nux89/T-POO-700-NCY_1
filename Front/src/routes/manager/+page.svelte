@@ -5,10 +5,6 @@
 
     let teamData;
     let usersData;
-    let ShowingUserTime = false;
-    let viewedUser;
-    let workingtimes;
-    let userworkingtimes;
 
 function createTeam(e) {
     var myHeaders = new Headers();
@@ -120,70 +116,14 @@ function findTeamById(id) {
         return "Loading...";
     }
 
-function findUserById(id) {
-    if (usersData) {
-        const user = usersData.data.find(user => user.id == id);
-        return user ? user : "User Not Found";
-    }
-    return "Loading...";
-}
-
-function setViewedUser (id) {
-    localStorage.setItem("viewedUser", id);
-    getWorkingTimes();
-    findWorkingTimeById(id);
-    ShowingUserTime = true;
-    viewedUser = findUserById(id);
-}
-
 function checkForRights() {
     if (!localStorage.getItem("user")) {
         window.location.href = "/login";
     }
     let user = getUserFromStorage();
-    if (user.data.role != "supermanager") {
+    if (user.data.role != "manager" && user.data.role != "supermanager") {
         window.location.href = "/home";
     }
-}
-
-function getWorkingTimes() {
-
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-};
-
-fetch("http://localhost:4002/api/workingtimes/", requestOptions)
-  .then(response => response.text())
-  .then(result => localStorage.setItem("workingtimes", result))
-  .catch(error => console.log('error', error));
-
-workingtimes = JSON.parse(localStorage.getItem("workingtimes"));
-}
-
-function getTimeElapsed (start, end) {
-    const start_date = new Date(start);
-    const end_date = new Date(end);
-    const hours = Math.floor((end_date - start_date) / 1000 / 60 / 60);
-    const minutes = Math.floor((end_date - start_date) / 1000 / 60 - hours * 60);
-    const seconds = Math.floor((end_date - start_date) / 1000 - hours * 60 * 60 - minutes * 60);
-    return (hours + "h" + minutes + "m" + seconds + "s");
-}
-
-function getDate (date) {
-    const date_date = new Date(date);
-    return (date_date.getDate() + "/" + date_date.getMonth() + "/" + date_date.getFullYear());
-}
-
-function formatDate (date) {
-    const date_date = new Date(date);
-    return (date_date.getHours() + ":" + date_date.getMinutes() + ":" + date_date.getSeconds());
-}
-
-async function findWorkingTimeById(id) {
-    await workingtimes;
-    userworkingtimes = workingtimes.data.filter(workingtime => workingtime.user_id == id);
-    workingtimes.data = userworkingtimes;
 }
 
 GetAllUsers()
@@ -233,8 +173,7 @@ checkForRights()
                             </select>
                         </td>
                         <td>                            
-                            <button class="button" on:click={() => setUserTeam(user.id, user.team, user.role)}>Modify</button>
-                            <button class="button" on:click={() => setViewedUser(user.id)}>View</button>
+                            <button class="button" on:click={() => setUserTeam(user.id, user.team, user.role)}>Modiify</button>
                         </td>
                     </tr>
                 {/each}
@@ -272,39 +211,7 @@ checkForRights()
             </tbody>
         </table>
     </div>
-    <div>
-        {#if ShowingUserTime}
-            <h1>Working Times</h1>
-            <h2>{viewedUser.name}</h2>
-            <h2>{viewedUser.email}</h2>
-            <h3>{findTeamById(viewedUser.team)}</h3>
-            <table class="table">
-                <tr class="table-header">
-                    <th>Date</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Time</th>
-                </tr>
-                {#if userworkingtimes}
-                {#each workingtimes.data as workingtime}
-                    <tr class="usercard">
-                        <td>{getDate(workingtime.start)}</td>
-                        <td>{formatDate(workingtime.start)}</td>
-                        <td>{formatDate(workingtime.end)}</td>
-                        <td>{getTimeElapsed(workingtime.start, workingtime.end)}</td>
-
-                    </tr>
-                {/each}
-                {:else}
-                    <tr>
-                        <td colspan="2">loading...</td>
-                    </tr>
-                {/if}
-            </table>
-        {:else}
-            <p class="loading">Loading...</p>
-        {/if}
-    </div>
+    
 </div>
 </div>
 </main>

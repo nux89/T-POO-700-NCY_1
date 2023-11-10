@@ -10,13 +10,22 @@
             const [key, value] = field;
             data[key] = value;
         }
+        var raw = JSON.stringify({
+            "user": {
+                "email": data.email,
+                "name": data.name,
+                "password": data.password,
+                "role": data.role,
+                "team": "none",
+            }
+        });
 
         const r = fetch("http://127.0.0.1:4002/api/users/", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user: data }),
+            body: raw,
         });
         r.then((e) => {
             console.log("OK", e);
@@ -70,6 +79,7 @@
             <select name="role" id="role">
                 <option value="employee">Employee</option>
                 <option value="manager">Manager</option>
+                <option value="supermanager">Super Manager</option>
             </select>
         </div>
 

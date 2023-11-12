@@ -37,8 +37,8 @@
                 <li class="nav-item pl-1"><a class="nav-link" href="#" on:click={logout}>Logout</a></li>
                 <li class="nav-item pl-1"><a class="nav-link" href="/profile">Profile</a></li>
                 {:else}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
                 {/if}
                 {#if getRoleFromStorage() === 'manager' }
                     <li class="nav-item pl-1">

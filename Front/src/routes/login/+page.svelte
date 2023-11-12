@@ -12,25 +12,26 @@
       const password = formData.get("password");
 
 
+      var myHeaders = new Headers();
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "email": email,
+        "password": password
+      });
+
       var requestOptions = {
-        method: 'GET',
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
         redirect: 'follow'
       };
 
-      fetch(`${PUBLIC_URL_API}/api/users/`+ email + "/name", requestOptions)
+      fetch("localhost:4002/api/users/sign_in", requestOptions)
         .then(response => response.text())
-        .then(result => {console.log(result)
-          user = JSON.parse(result)
-          if (user.data.password == password) {
-            console.log("OK")
-            localStorage.setItem("user", JSON.stringify(user))
-            window.location.href = "/home"
-          } else {
-            console.log("NO OK")
-            toast('❌ Your authentication failed')
-          }
-        })
-        .catch(error =>  toast('❌ Your authentication failed'));
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 
     }
 

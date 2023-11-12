@@ -39,6 +39,7 @@
   let showContent = "";
   let role;
   let infoUser;
+  let teamsSearch;
   function getUserFromStorage() {
       const user = localStorage.getItem("user");
       if (user) {
@@ -57,6 +58,11 @@
       updateDataHandler(infoUser.data.id)
     }
   })
+
+  $: {
+    console.log("RRRR", employees.filter((a) => a.name.toLowerCase().includes(value || '')));
+    valeurRecherge = employees.filter((a) => a.name.toLowerCase().includes(value || ''));
+  }
 
   const fusionTableGo = (d) => {
     return fusionDataStore.createDataTable(d, shema);
@@ -176,13 +182,18 @@
     }
   };
 
+  // async function fetchEmployee2() {
+  //   GET(`/api/users`).then((v) => {
+  //     employees = v.data;
+  //   })
+  // }
   async function fetchEmployee() {
     return await GET(`/api/users`);
   }
   async function fetchTeams() {
     return await GET(`/api/teams`);
   }
-  let promise = fetchEmployee();
+  let promise = fetchEmployee().then(v => employees = v.data);
 
 const changeTeam = (id, idx) => {
   const r = fetch(PUBLIC_URL_API+"/api/users/" + id, {
@@ -221,6 +232,7 @@ const changeTeam = (id, idx) => {
           class="form-control mb-2"
           id="floatingInput"
           placeholder="name@example.com"
+          bind:value
           required
         />
         <label for="floatingInput">Rechercher un employé</label>
@@ -234,14 +246,17 @@ const changeTeam = (id, idx) => {
           name="group"
           id="group-team"
         >
+          <!-- {#if valeurRecherge} -->
           <option value="tout" selected>Tout</option>
-          {#each teams.data as val}
+          {#each valeurRecherge as val}
             <option value={val.name} on:click={() => updateDataHandler(val.id)}>{val.name}</option>
           {/each}
+          <!-- {/if} -->
         </select>
       <ul class="list-group">
 
-        {#each data as employe, i}
+        <!-- {#each data as employe, i} -->
+        {#each valeurRecherge as employe, i}
         <div style="display: flex;">
           <button
             class="list-group-item active"
@@ -264,7 +279,7 @@ const changeTeam = (id, idx) => {
         </div>
 
           {#if showContent === employe.name}
-            <div transition:slide={{ duration: 400 }}>
+            <div transition:slide={{ duration: 400 }} style="color: white">
               <div>email: {employe.email}</div>
               <div>role: {employe.role}</div>
               <div>equipe:</div>

@@ -3,6 +3,7 @@
     import "../register/auth.scss";
     import { PUBLIC_URL_API } from '$env/static/public';
     import { fade } from "svelte/transition";
+    import { Toaster, toast } from 'svelte-sonner'
     let user
 
     function login(e) {
@@ -26,9 +27,10 @@
             window.location.href = "/home"
           } else {
             console.log("NO OK")
+            toast('❌ Your authentication failed')
           }
         })
-        .catch(error => console.log('error', error));
+        .catch(error =>  toast('❌ Your authentication failed'));
 
     }
 
@@ -36,7 +38,7 @@
 </script>
 
 <NavBar />
-
+<Toaster position="top-center" />
   <main class="form-signin">
 
       <h1 class="h3">Login</h1>

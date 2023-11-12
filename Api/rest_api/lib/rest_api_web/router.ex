@@ -14,7 +14,6 @@ defmodule RestApiWeb.Router do
     get "users", UserController, :index
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
-    get "users", UserController, :index
     post "clocks/:id" , ClockController, :create
     get "clocks/:user_id", ClockController, :show
     get "workingtimes", WorkingtimeController, :index

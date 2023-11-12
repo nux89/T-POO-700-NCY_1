@@ -57,7 +57,15 @@ defmodule RestApi.Admin do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
+    |> handle_insert_result()
   end
+
+  defp handle_insert_result({:ok, user}), do: {:ok, user}
+
+  defp handle_insert_result({:error, changeset}) do
+    {:error, changeset}
+  end
+
 
   @doc """
   Updates a user.
@@ -143,7 +151,7 @@ defmodule RestApi.Admin do
 
   def get_clocks_by_user_id(user_id) do
     Repo.all(from c in Clock, where: c.user_id == ^user_id)
-    
+
   end
 
   @doc """

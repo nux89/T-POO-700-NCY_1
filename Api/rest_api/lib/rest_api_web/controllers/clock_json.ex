@@ -36,9 +36,6 @@ defmodule RestApiWeb.ClockJSON do
     for clock <- clocks, do: data(clock)
   end
 
-  defp data(%{clocks: nil}) do
-    []
-  end
 
 
 

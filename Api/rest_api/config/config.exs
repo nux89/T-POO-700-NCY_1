@@ -37,6 +37,12 @@ config :logger, :console,
   metadata: [:request_id],
   filter_parameters: []
 
+config :rest_api, RestApiWeb.Guardian,
+issuer: "rest-api",
+secret_key: "UoXrgdz9FDhwvxJ3TumRDv/OUQvaHzKoeS8tfB8EfY+49YFZecwKpSDzcCJIRUMj"
+
+# Use Jason for JSON parsing in Phoenix
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

@@ -1,10 +1,9 @@
-
-
 defmodule RestApiWeb.UserController do
   use RestApiWeb, :controller
 
   alias RestApi.Admin
   alias RestApi.Admin.User
+  alias RestApiWeb.{Auth.Guardian,Auth.ErrorResponse}
 
   action_fallback RestApiWeb.FallbackController
 
@@ -13,12 +12,13 @@ defmodule RestApiWeb.UserController do
     render(conn, :index, users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Admin.create_user(user_params) do
+def create(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Admin.create_user(user_params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user)  do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/users/#{user}")
-      |> render(:show, user: user)
+      |> render("show.json", user: user, token: token)
     end
   end
 
@@ -27,19 +27,26 @@ defmodule RestApiWeb.UserController do
     render(conn, :show, user: user)
   end
 
-  def indexmails(conn, %{"email" => email, "username" => username}) do
+  def indexmails(conn, %{"email" => email, "username" => _user_params}) do
     user = Admin.get_user_by_email(email)
-    _name = username
     render(conn, :show, user: user)
   end
 
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Guardian.authenticate(email, password) do
+      {:ok, user , token } ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", %{user: user, token: token})
+      {:error, :unauthorized} -> raise raise ErrorResponse.Unauthorized, message: "Email or Password incorrect."
+    end
+  end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Admin.get_user!(id)
 
     with {:ok, %User{} = user} <- Admin.update_user(user, user_params) do
       render(conn, :show, user: user)
-      
     end
   end
 

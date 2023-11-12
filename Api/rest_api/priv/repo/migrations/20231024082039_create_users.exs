@@ -4,13 +4,16 @@ defmodule RestApi.Repo.Migrations.CreateUsers do
   def change do
     create table(:users, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :name, :string
       add :email, :string
-      add :role, :string, default: "user"
-      add :password, :string, default: "123456"
-      add :team, :string, default: "team1"
+      add :name, :string
+      add :role, :string
+      add :password, :string
+      add :team, :string, default: "AUCUN"
 
       timestamps(type: :utc_datetime)
     end
+
+    # Création d'une contrainte d'unicité sur le champ 'email'
+    create unique_index(:users, [:email])
   end
 end

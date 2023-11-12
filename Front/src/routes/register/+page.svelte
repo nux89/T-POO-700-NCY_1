@@ -24,7 +24,7 @@
             }
         });
 
-        const r = fetch(PUBLIC_URL_API+ "/api/users/", {
+        const r = fetch(PUBLIC_URL_API+ "/api/users", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -33,6 +33,7 @@
         });
         r.then((e) => {
             console.log("OK", e);
+            console.log(r.body)
         }).catch((e) => {
             console.log("NO OK", e);
         })
@@ -79,8 +80,8 @@
         </div>
 
         <div class="form-floating">
-            <select name="role" id="role" class="form-select" disabled>
-                <option value="employee">Employee</option>
+            <select name="role" id="role" class="form-select" >
+                <option selected value="employee">Employee</option>
                 <option value="manager">Manager</option>
                 <option value="supermanager">Super Manager</option>
             </select>

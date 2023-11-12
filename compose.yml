@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ToDoApp
+      POSTGRES_DB: pointage
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -14,18 +14,29 @@ services:
 
   api:
     build:
-      context: ./
+      context: ./Api
       dockerfile: Dockerfile
     environment:
       PGUSER: postgres
       PGPASSWORD: postgres
-      PGDATABASE: ToDoApp
+      PGDATABASE: pointage
       PGPORT: 5432
       PGHOST: postgredb
     depends_on:
       - postgredb
     ports:
-      - "4000:4000"
+      - "4002:4002"
+
+  front: 
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    depends_on: 
+      - api
+    ports:
+    - "8000:8000"
+
+
 
 volumes:
   pgdata:

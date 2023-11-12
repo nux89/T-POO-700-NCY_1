@@ -5,7 +5,12 @@ defmodule RestApiWeb.FallbackController do
   See `Phoenix.Controller.action_fallback/1` for more details.
   """
   use RestApiWeb, :controller
-
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(json: RestApiWeb.ChangesetJSON)
+    |> render(:error, changeset: changeset)
+  end
   # This clause is an example of how to handle resources that cannot be found.
   def call(conn, {:error, :not_found}) do
     conn

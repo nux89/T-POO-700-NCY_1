@@ -11,8 +11,8 @@ defmodule RestApiWeb.UserJSON do
   @doc """
   Renders a single user.
   """
-  def show(%{user: user}) do
-    %{data: data(user)}
+  def show(%{user: user, token: token}) do
+    %{data: data(user), token: token}
   end
 
   def show(nil) do
@@ -26,7 +26,6 @@ defmodule RestApiWeb.UserJSON do
       name: user.name,
       email: user.email,
       role: user.role,
-      password: user.password,
       team: user.team
     }
   end

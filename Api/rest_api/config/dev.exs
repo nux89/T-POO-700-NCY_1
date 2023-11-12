@@ -2,10 +2,16 @@ import Config
 
 # Configure your database
 config :rest_api, RestApi.Repo,
-  username: "vroum",
-  password: "vroumvroum",
+  # username: System.get_env("PGUSER"),
+  # password: System.get_env("PGPASSWORD"),
+  # database: System.get_env("PGDATABASE"),
+  # hostname: System.get_env("PGHOST"),
+  # port:     System.get_env("PGPORT"),
+  username: "postgres",
+  password: "postgres",
+  database: "pointage",
   hostname: "localhost",
-  database: "vroum",
+  port:     "5432",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -19,12 +25,14 @@ config :rest_api, RestApi.Repo,
 config :rest_api, RestApiWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {0, 0, 0, 0}, port: 4002],
+  http: [ip: {0, 0, 0, 0}, port: 4003],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "HdBF5+OEgwCgBYNvf/BRh0ENDZQ+1Jk5hCJkbHx6O5vJOUuJAoxMQLze2gxnL+ED",
   watchers: []
+
+
 
 # ## SSL Support
 #
@@ -48,7 +56,9 @@ config :rest_api, RestApiWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
-
+config :rest_api, RestApiWeb.Auth.Guardian,
+  issuer: "rest_api",
+  secret_key: "HdBF5+OEgwCgBYNvf/BRh0ENDZQ+1Jk5hCJkbHx6O5vJOUuJAoxMQLze2gxnL+ED"
 # Enable dev routes for dashboard and mailbox
 config :rest_api, dev_routes: true
 

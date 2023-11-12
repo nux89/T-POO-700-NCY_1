@@ -1,5 +1,4 @@
 defmodule RestApiWeb.Router do
-  
   use RestApiWeb, :router
   use Plug.ErrorHandler
 
@@ -15,17 +14,28 @@ defmodule RestApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug RestApiWeb.Auth.Pipeline
+  end
+
   scope "/api", RestApiWeb do
     pipe_through :api
-    resources "/teams", TeamController, except: [:new, :edit]
+
     post "users", UserController, :create
+    post "/users/sign_in", UserController, :sign_in
+  end
+
+  scope "/api", RestApiWeb do
+
+    pipe_through [:api, :auth]
+    
     put "users/:id", UserController, :update
     delete "users/:id", UserController, :delete
     get "users", UserController, :index
-    post "/users/sign_in", UserController, :sign_in
+    resources "/teams", TeamController, except: [:new, :edit]
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
-    post "clocks/:id" , ClockController, :create
+    post "clocks/:id", ClockController, :create
     get "clocks/:user_id", ClockController, :show
     get "workingtimes", WorkingtimeController, :index
     get "workingtimes/:userId/:id", WorkingtimeController, :show
@@ -37,9 +47,7 @@ defmodule RestApiWeb.Router do
     put "team/:id", TeamController, :update
     delete "team/:id", TeamController, :delete
     get "team", TeamController, :index
-
   end
-
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:rest_api, :dev_routes) do
@@ -56,8 +64,5 @@ defmodule RestApiWeb.Router do
       live_dashboard "/dashboard", metrics: RestApiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-
   end
-
-
 end

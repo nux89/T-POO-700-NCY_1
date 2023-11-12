@@ -3,7 +3,7 @@ defmodule RestApiWeb.UserController do
 
   alias RestApi.Admin
   alias RestApi.Admin.User
-  alias RestApiWeb.Auth.Guardian
+  alias RestApiWeb.{Auth.Guardian,Auth.ErrorResponse}
 
   action_fallback RestApiWeb.FallbackController
 
@@ -32,6 +32,15 @@ def create(conn, %{"user" => user_params}) do
     render(conn, :show, user: user)
   end
 
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Guardian.authenticate(email, password) do
+      {:ok, user , token } ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", %{user: user, token: token})
+      {:error, :unauthorized} -> raise raise ErrorResponse.Unauthorized, message: "Email or Password incorrect."
+    end
+  end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Admin.get_user!(id)

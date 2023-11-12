@@ -1,5 +1,15 @@
 defmodule RestApiWeb.Router do
+  
   use RestApiWeb, :router
+  use Plug.ErrorHandler
+
+  defp handle_errors(conn, %{reason: %Phoenix.Router.NoRouteError{message: message}}) do
+    conn |> json(%{errors: message}) |> halt()
+  end
+
+  defp handle_errors(conn, %{reason: %{message: message}}) do
+    conn |> json(%{errors: message}) |> halt()
+  end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -12,6 +22,7 @@ defmodule RestApiWeb.Router do
     put "users/:id", UserController, :update
     delete "users/:id", UserController, :delete
     get "users", UserController, :index
+    post "/users/sign_in", UserController, :sign_in
     get "users/:id", UserController, :show
     get "users/:email/:username", UserController, :indexmails
     post "clocks/:id" , ClockController, :create

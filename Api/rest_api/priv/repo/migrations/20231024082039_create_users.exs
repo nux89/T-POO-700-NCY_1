@@ -13,7 +13,6 @@ defmodule RestApi.Repo.Migrations.CreateUsers do
       timestamps(type: :utc_datetime)
     end
 
-    # Création d'une contrainte d'unicité sur le champ 'email'
     create unique_index(:users, [:email])
   end
 end

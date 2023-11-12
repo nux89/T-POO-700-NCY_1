@@ -3,6 +3,7 @@ defmodule RestApiWeb.UserController do
 
   alias RestApi.Admin
   alias RestApi.Admin.User
+  alias RestApiWeb.Auth.Guardian
 
   action_fallback RestApiWeb.FallbackController
 
@@ -11,12 +12,13 @@ defmodule RestApiWeb.UserController do
     render(conn, :index, users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Admin.create_user(user_params) do
+def create(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Admin.create_user(user_params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user)  do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/users/#{user}")
-      |> render(:show, user: user)
+      |> render("show.json", user: user, token: token)
     end
   end
 

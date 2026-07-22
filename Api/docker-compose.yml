@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgredb:
+    image: postgres:15-alpine
+    container_name: t_poo_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: app_dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: t_poo_phoenix_api
+    environment:
+      DATABASE_URL: postgresql://postgres:postgrespassword@postgredb:5432/app_dev
+      PORT: 4000
+    depends_on:
+      - postgredb
+    ports:
+      - "4000:4000"
+
+volumes:
+  pgdata:
